@@ -14,6 +14,9 @@ const project = new typescript.TypeScriptProject({
   description: "Synthisize a minimal JSII file for Projen typescript projects.",
   projenrcTs: true,
 
+  // publish on npm
+  releaseToNpm: true,
+
   // Use Prettier
   prettier: true,
 
