@@ -7,12 +7,20 @@ import {
 } from "projen/lib/vscode";
 import { JsiiFaker } from "./src/jsii-faker";
 
+const authorName = "Cameron Childress";
+const authorAddress = "cameronc@sumoc.com";
+const repository = "https://github.com/sumoinc/jsii-faker";
+
 const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: "main",
   name: "jsii-faker",
   packageName: "@sumoc/jsii-faker",
   description: "Synthisize a minimal JSII file for Projen typescript projects.",
   projenrcTs: true,
+  repository,
+  authorName,
+  authorOrganization: true,
+  authorEmail: authorAddress,
 
   // publish on npm
   releaseToNpm: true,

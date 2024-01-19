@@ -5,7 +5,7 @@ This is a proof of concept Projen Component that builds a minimal `.jsii` file i
  `npx projen new --from @my-scope/my-package my-project-type` syntax.
 
 > [!CAUTION]
-> Despite it's usefulness, this entire package is possibly a terrible idea. It breaks a lot of rules and standards for `jsii``, and should be considered pre-alpha.
+> Despite it's usefulness, this entire package is possibly a terrible idea. It breaks a lot of rules and standards for `jsii`, and should be considered pre-alpha.
  
 
 ## What's jsii?

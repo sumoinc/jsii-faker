@@ -1,6 +1,10 @@
 {
   "name": "@sumoc/jsii-faker",
   "description": "Synthisize a minimal JSII file for Projen typescript projects.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sumoinc/jsii-faker"
+  },
   "scripts": {
     "build": "npx projen build",
     "bump": "npx projen bump",
@@ -20,6 +24,11 @@
     "upgrade": "npx projen upgrade",
     "watch": "npx projen watch",
     "projen": "npx projen"
+  },
+  "author": {
+    "name": "Cameron Childress",
+    "email": "cameronc@sumoc.com",
+    "organization": true
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
