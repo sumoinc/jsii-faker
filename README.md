@@ -2,7 +2,7 @@
 
 This is a proof of concept Projen Component that builds a minimal `.jsii` file in the root of a Typescript based Projen project. The resulting file only includes the metadata that is required to support init as a new project using syntax similar like
 
- `npx projen new --from @my-scope/my-package my-project-type` syntax.
+ `npx projen new --from @sumoc/jsii-faker fake` syntax.
 
 > [!CAUTION]
 > Despite it's usefulness, this entire package is possibly a terrible idea. It breaks a lot of rules and standards for `jsii`, and should be considered pre-alpha.
