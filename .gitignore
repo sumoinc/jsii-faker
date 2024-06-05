@@ -30,6 +30,10 @@ jspm_packages/
 *.tgz
 .yarn-integrity
 .cache
+/test-reports/
+junit.xml
+!/jest.config.json
+/coverage/
 !/.github/workflows/build.yml
 /dist/changelog.md
 /dist/version.txt
@@ -47,11 +51,6 @@ jspm_packages/
 /lib
 /dist/
 !/.eslintrc.json
-/test-reports/
-junit.xml
-!/jest.config.json
-/coverage/
 !/.vscode/settings.json
-!/.vscode/extensions.json
 !/.jsii
 !/.projenrc.ts

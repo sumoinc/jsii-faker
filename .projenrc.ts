@@ -1,10 +1,6 @@
 import { typescript } from "projen";
-import { Jest, NodePackageManager, Transform } from "projen/lib/javascript";
-import {
-  VsCode,
-  VsCodeRecommendedExtensions,
-  VsCodeSettings,
-} from "projen/lib/vscode";
+import { NodePackageManager, Transform } from "projen/lib/javascript";
+import { VsCode, VsCodeSettings } from "projen/lib/vscode";
 import { JsiiFaker } from "./src/jsii-faker";
 
 const authorName = "Cameron Childress";
@@ -22,18 +18,44 @@ const project = new typescript.TypeScriptProject({
   authorOrganization: true,
   authorEmail: authorAddress,
 
-  // publish on npm
+  /**
+   * Publish this library to NPM.
+   */
   releaseToNpm: true,
 
-  // Use Prettier
+  /**
+   * Use Prettier for code formatting.
+   */
   prettier: true,
 
-  // Use PNPM
+  /**
+   * Use PNPM instead of the default (Yarn).
+   */
   packageManager: NodePackageManager.PNPM,
-  pnpmVersion: "8",
+  pnpmVersion: "9",
 
-  // configured below
-  jest: false,
+  /**
+   * Keep Jest config in it's own file, and expect the tests to be next to the
+   * code being tested instead of in a test directory.
+   */
+  jestOptions: {
+    configFilePath: "jest.config.json",
+    jestConfig: {
+      roots: [`<rootDir>/src`],
+      testMatch: [`**/*.spec.ts`],
+      preset: "ts-jest",
+      transform: {
+        ["^.+\\.ts?$"]: new Transform("ts-jest"),
+      },
+      moduleFileExtensions: ["js", "ts"],
+    },
+  },
+
+  /**
+   * Don't generate sample code. Especially don't recreate the unused and
+   * unwanted test directory.
+   */
+  sampleCode: false,
 
   /**
    * Some of these should probably be peer deps or something else.
@@ -41,66 +63,41 @@ const project = new typescript.TypeScriptProject({
   deps: ["@jsii/spec", "projen", "constructs", "type-fest@^4"],
 });
 
-/*******************************************************************************
- *
- * Manually configure Jest.
- *
- ******************************************************************************/
-
-// add type and ts-jest support
-project.addDevDeps(`@types/jest`);
-project.addDevDeps(`ts-jest`);
-
-// don't package test files
+/**
+ * Since we don't want our tests to live in the tests directory, we have to
+ * tell the packaging process to ignore them in the main src directory instead.
+ */
 project.addPackageIgnore("*.spec.d.ts");
 project.addPackageIgnore("*.spec.js");
 
-// configure jest
-new Jest(project, {
-  // jest.config.json file instead of inline
-  configFilePath: "jest.config.json",
-  jestConfig: {
-    // tests are next to source, not hidden in test folder
-    roots: [`<rootDir>/${project.srcdir}`],
-    testMatch: ["**/*.spec.ts"],
-    // other presets
-    preset: "ts-jest",
-    transform: {
-      ["^.+\\.ts?$"]: new Transform("ts-jest"),
-    },
-    moduleFileExtensions: ["js", "ts"],
-  },
-});
-
 /*******************************************************************************
  *
- * VS Code
+ * VS Code Configuration
+ *
+ * Create directory level settings for VS Code at the project root.
  *
  ******************************************************************************/
 
-// configure vs code
 const vscode = new VsCode(project);
-
-// VSCODE: Root level editor settings
 const vsSettings = new VsCodeSettings(vscode);
+
+/**
+ * Add some common formatting preferences to the project.
+ */
 vsSettings.addSetting("editor.tabSize", 2);
 vsSettings.addSetting("editor.bracketPairColorization.enabled", true);
 vsSettings.addSetting("editor.guides.bracketPairs", "active");
 vsSettings.addSetting("editor.rulers", [80, 120]);
 
-// use eslint to fix files for typescript files only
+/**
+ * Lint typescript files only. This avoids common VS Code slowdown problems
+ * related to linting being scoped too widely in the project.
+ */
 vsSettings.addSetting(
   "editor.codeActionsOnSave",
   { "source.fixAll.eslint": "explicit" },
   "typescript",
 );
-
-// make sure each directory's eslint is found properly.
-vsSettings.addSetting("eslint.workingDirectories", [{ mode: "auto" }]);
-
-// VSCODE: extensions
-const vsExtensions = new VsCodeRecommendedExtensions(vscode);
-vsExtensions.addRecommendations("dbaeumer.vscode-eslint");
 
 /*******************************************************************************
  *
