@@ -3,34 +3,6 @@ import { Component, JsonFile } from "projen";
 import { TypeScriptProject } from "projen/lib/typescript";
 import { ValueOf } from "type-fest";
 
-/**
- * !!! WARNING - VERY EXPERIMENTAL !!!
- *
- * This is possibly a terrible idea, but for now it's the only way that I can
- * find to generate a minimal `.jsii` file so that Projen can then consume this
- * package when called similar to:
- *
- *  `npx projen new --from @my-scope/my-package my-project-type`
- *
- * What you are missing by not using the projen built in JsiiProject type:
- *
- * - No automatic API.md file.
- * - No compatable versions in other language like GO, Java, Python.
- * - Other things?
- *
- * What you gain by using this:
- *
- * - Freedom from some fairly significant limitations that JSII imposes on your
- *   Typescript (https://aws.github.io/jsii/user-guides/lib-author/typescript-restrictions/)
- * - Ability to publish / consume pure Typescript project types more easily.
- *
- * JSII CODE
- *
- * See the following for more info on how jsii proper assembles and validates the file:
- * https://github.com/aws/jsii/blob/62d2d37212a111f4adc63998245d280f1c43ff86/packages/jsii/lib/assembler.ts
- *
- */
-
 const ProjenBaseFqn = {
   TYPESCRIPT_PROJECT: "projen.typescript.TypeScriptProject",
   TYPESCRIPT_PROJECT_OPTIONS: "projen.typescript.TypeScriptProjectOptions",
@@ -43,12 +15,14 @@ export interface ClassTypeOptions {
    * @example "MyProject"
    */
   name: string;
+
   /**
    * The FQN for the base class this class is extending.
    *
    * @default ProjenBaseFqn.TYPESCRIPT_PROJECT
    */
   baseFqn?: ValueOf<typeof ProjenBaseFqn> | string;
+
   /**
    * The FQN for the options for this class.
    *
