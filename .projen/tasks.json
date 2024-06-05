@@ -139,7 +139,7 @@
           "exec": "mkdir -p dist/js"
         },
         {
-          "exec": "mv $(pnpm pack) dist/js/"
+          "exec": "pnpm pack --pack-destination dist/js"
         }
       ]
     },
@@ -225,7 +225,7 @@
       },
       "steps": [
         {
-          "exec": "pnpx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,constructs,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,eslint,jest,jest-junit,prettier,projen,standard-version,ts-jest,ts-node,typescript,@jsii/spec,type-fest"
+          "exec": "pnpm dlx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/jest,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,jest,prettier,projen,ts-jest,ts-node,typescript,@jsii/spec,constructs"
         },
         {
           "exec": "pnpm i --no-frozen-lockfile"

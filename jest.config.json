@@ -1,11 +1,12 @@
 {
+  "coverageProvider": "v8",
   "roots": [
     "<rootDir>/src"
   ],
   "testMatch": [
     "**/*.spec.ts",
     "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-    "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)"
+    "<rootDir>/@(test|src)/**/*(*.)@(spec|test).ts?(x)"
   ],
   "preset": "ts-jest",
   "transform": {

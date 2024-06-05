@@ -28,3 +28,4 @@ tsconfig.tsbuildinfo
 *.spec.js
 /.gitattributes
 /.projenrc.ts
+/projenrc
