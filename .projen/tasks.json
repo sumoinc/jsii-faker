@@ -184,11 +184,11 @@
       "description": "Run tests",
       "steps": [
         {
-          "spawn": "eslint"
-        },
-        {
           "exec": "jest --passWithNoTests --updateSnapshot",
           "receiveArgs": true
+        },
+        {
+          "spawn": "eslint"
         }
       ]
     },
